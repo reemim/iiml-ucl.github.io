@@ -97,7 +97,7 @@
           <p>Optimisation of power networks design, Graph neural networks and Machine Learning</p>
           <h4>About</h4>
           <hr>
-          <p>Yousef Alateeqi is a PhD student in the Department of Electronic and Electrical Engineering at University College London. His research focuses on the optimization of power network design, with a particular emphasis on the application of graph neural networks and machine learning. He is interested in deploying these techniques to address challenges within the oil and gas industry.
+          <p>Yousef Alateeqi is a PhD student in the Department of Electronic and Electrical Engineering at University College London. His research focuses on the optimization of power network design, with a particular emphasis on the application of graph neural networks and machine learning. He is interested in deploying these techniques to address challenges within the oil and gas industry.</p>
           <h4>Publications</h4>
           <hr>
           <div class="row">
@@ -197,6 +197,38 @@
   </div>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.js"></script>
+
+  <script>
+    // Hide Publications block when there is no BibTeX content
+    document.addEventListener('DOMContentLoaded', function () {
+      var bibTextarea = document.getElementById('bibtex_input');
+      var hasBib = bibTextarea && bibTextarea.value.trim().length > 0;
+
+      var tpl = document.querySelector('.bibtex_template');
+      var struct = document.querySelector('.bibtex_structure');
+      var search = document.getElementById('searchbar');
+      var display = document.getElementById('bibtex_display');
+
+      if (!hasBib) {
+        if (tpl) tpl.style.display = 'none';
+        if (struct) struct.style.display = 'none';
+        if (search) search.parentElement.style.display = 'none';
+        if (display) display.style.display = 'none';
+
+        // add polite note
+        var pubsHeader = Array.from(document.querySelectorAll('h4')).find(h => h.textContent.trim() === 'Publications');
+        if (pubsHeader) {
+          pubsHeader.insertAdjacentHTML('afterend', '<p>No publications to display yet.</p>');
+        }
+      }
+
+      // Graceful fallback if bibtex-js failed to load (template showing)
+      var libLoaded = window.BibtexDisplay || window.BibtexParser || window.bibtex_js;
+      if (!libLoaded && tpl) {
+        tpl.style.display = 'none';
+      }
+    });
+  </script>
 
 </body>
 

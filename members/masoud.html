@@ -71,7 +71,7 @@
         <div class="col-md-8 publication-text">
           <h4>Research Interests</h4>
           <hr>
-          <p>Recommender systems, natural language processing (NLP), cultural alignment for LLMs, and business applications.</p>
+          <p>Machine Learning, natural language processing (NLP), cultural alignment for LLMs, and business applications.</p>
 
           <h4>About</h4>
           <hr>
@@ -80,9 +80,9 @@
           <h4>Talks</h4>
           <hr>
           <ul>
-            <li>Oral presentation &amp; panel discussion — <em>Workshop on Global AI Cultures</em>, ICLR 2024.</li>
-            <li>Birds of a Feather session — <em>Multilingual &amp; Multimodal Cultural Inclusivity in LLMs</em>:, COLING 2025.</li>
             <li>Oral presentation — <em>ArabicNLP</em>, EMNLP 2025.</li>
+            <li>Birds of a Feather session — <em>Multilingual &amp; Multimodal Cultural Inclusivity in LLMs</em>, COLING 2025.</li>
+            <li>Oral presentation &amp; panel discussion — <em>Workshop on Global AI Cultures</em>, ICLR 2024.</li>
           </ul>
 
           <h4>Workshops</h4>
@@ -192,7 +192,7 @@
   year={2018},
   organization={IEEE}
 }
-</textarea>
+              </textarea>
 
               <div class="bibtex_template">
                 <div class="if author">
@@ -215,27 +215,29 @@
                 <div style="margin-bottom:10px;"></div>
               </div>
 
-              <div class="bibtex_structure">
-                <div class="sections bibtextypekey">
-                  <div class="section inproceedings">
-                    <h2>Conference and Workshop Papers</h2>
-                    <div class="sort year" extra="DESC number"><div class="templates"></div></div>
-                  </div>
-                  <div class="section article">
-                    <h2>Refereed Articles</h2>
-                    <div class="sort year" extra="DESC number"><div class="templates"></div></div>
-                  </div>
-                  <div class="section misc|phdthesis|mastersthesis|bachelorsthesis|techreport">
-                    <h2>Pre-prints and Other Publications</h2>
-                    <div class="sort year" extra="DESC number"><div class="templates"></div></div>
-                  </div>
-                </div>
-              </div>
+              <!-- Removed bibtex structure and section headers -->
+<div class="sort year" extra="DESC number"><div class="templates"></div></div>
+<div id="bibtex_display"></div>
 
-              <div class="form-group" style="margin-bottom:10px;">
-                <input type="text" class="bibtex_search form-control" id="searchbar" placeholder="Search publications, authors, venues">
-              </div>
-              <div id="bibtex_display"></div>
+<!-- Static fallback list (shown only if bibtex-js fails) -->
+<div id="pubs_static" style="display:none;">
+  <ul class="list-unstyled" style="margin-left:0;">
+    <li style="margin-bottom:10px;">
+      <strong>2025.</strong> Masoud, Reem; Liu, Ziquan; Ferianc, Martin; Treleaven, Philip C.; Rodrigues, Miguel R. D. <em>Cultural Alignment in Large Language Models: An Explanatory Analysis Based on Hofstede's Cultural Dimensions</em>. Proceedings of the 31st International Conference on Computational Linguistics (COLING 2025). <a target="_blank" href="https://aclanthology.org/2025.coling-main.567/">URL</a>
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>2025.</strong> Alghamdi, Emad A.; Masoud, Reem; Alnuhait, Deema; Alomairi, Afnan Y.; Ashraf, Ahmed; Zaytoon, Mohamed. <em>AraTrust: An Evaluation of Trustworthiness for LLMs in Arabic</em>. Proceedings of the 31st International Conference on Computational Linguistics (COLING 2025). <a target="_blank" href="https://aclanthology.org/2025.coling-main.579/">URL</a>
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>2025.</strong> Alkhowaiter, Mohammed; Alshahrani, Saied; Alshahrani, Norah F.; Masoud, Reem I.; Alzahrani, Alaa; Alnuhait, Deema; Alghamdi, Emad A.; Almubarak, Khalid. <em>Mind the Gap: A Review of Arabic Post-Training Datasets and Their Limitations</em>. Proceedings of The Third Arabic Natural Language Processing Conference. <a target="_blank" href="https://aclanthology.org/2025.arabicnlp-main.26/">URL</a>
+    </li>
+    <li style="margin-bottom:10px;">
+      <strong>2018.</strong> Güler, Samet; Jiang, Jiming; Alghamdi, Anwaar A.; Masoud, Reem I.; Shamma, Jeff S. <em>Real time onboard ultrawideband localization scheme for an autonomous two-robot system</em>. 2018 IEEE Conference on Control Technology and Applications (CCTA), 1151–1158.
+    </li>
+  </ul>
+</div>
+<!-- Search removed -->
+<div id="bibtex_display"></div>
             </div>
           </div>
         </div>
@@ -248,6 +250,40 @@
   <div id="footer"></div>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.js"></script>
+
+  <!-- Fallback: hide BibTeX template if library missing or no entries -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var bibTextarea = document.getElementById('bibtex_input');
+    var hasBib = bibTextarea && bibTextarea.value.trim().length > 0;
+
+    var tpl = document.querySelector('.bibtex_template');
+    var searchWrap = document.getElementById('searchbar') && document.getElementById('searchbar').parentElement;
+    var display = document.getElementById('bibtex_display');
+    var staticBlock = document.getElementById('pubs_static');
+
+    // If no bib content, show static block if available
+    if (!hasBib) {
+      if (tpl) tpl.style.display = 'none';
+      if (searchWrap) searchWrap.style.display = 'none';
+      if (display) display.style.display = 'none';
+      if (staticBlock) staticBlock.style.display = '';
+      return;
+    }
+
+    // If bibtex-js failed to load, switch to static list
+    var libLoaded = window.BibtexDisplay || window.BibtexParser || window.bibtex_js;
+    if (!libLoaded) {
+      if (tpl) tpl.style.display = 'none';
+      if (searchWrap) searchWrap.style.display = 'none';
+      if (display) display.style.display = 'none';
+      if (staticBlock) staticBlock.style.display = '';
+    } else {
+      // Library loaded: keep static hidden
+      if (staticBlock) staticBlock.style.display = 'none';
+    }
+  });
+</script>
 </body>
 
 </html>
